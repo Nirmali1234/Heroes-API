@@ -1,7 +1,12 @@
 const express = require('express');
-
+const authenticator = require ("./middlewares/authenticator");
+const email = require ("./middlewares/emailjob");
 const app = express();
 const PORT = 3000;
+
+app.use(express.json()); //Catch json data in the request body
+app.use(authenticator);
+app.use(email);
 
 const herosArray = [
     {
@@ -18,7 +23,7 @@ const herosArray = [
     }
 ]
 
-app.use(express.json()); //Catch json data in the request body
+
 
 app.get('/api/heros', (req, res) => {
     res.send(herosArray);
