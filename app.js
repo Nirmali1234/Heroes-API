@@ -13,7 +13,7 @@ app.use(email);
 app.use('/api/heroes',heroes);
 app.use('./', home);
 
-mongoose
+mongoose //database connection string
         .connect("mongodb://localhost/herodb",{useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => console.log("Connected to Db successfully..."))
         .catch(err => console.log("Error has occured while connecting to db : ", err));
