@@ -77,8 +77,10 @@ router.post('/', async (req, res) => {
        return res.status(500).send(e.message);
    }  
 });
+ 
+//method 1
 
-router.put('/:heroId', async(req, res) => {
+/*router.put('/:heroId', async(req, res) => {
     //let heroId = parseInt(req.params.heroId);
     //let hero = heroesArray.find(h => h.id === heroId);
 
@@ -94,19 +96,35 @@ router.put('/:heroId', async(req, res) => {
     hero = await hero.save();
     //hero.name = req.body.heroName;
     res.send(hero);      
+});*/
+
+// method 2
+
+router.put('/:heroId', async(req, res) => {
+    let hero = await Hero.findOneAndUpdate(
+        {_id: req.params.heroId},
+        {$set: {likeCount: req.body.likeCount } },
+        {new: true, useFindAndModify:false}
+    );
+    res.send(hero);
 });
 
-router.delete('s/:heroId', (req, res) => {
-    let heroId = parseInt(req.params.heroId);//This will filter out any values with number continued by a string(including characters)
-    let hero = heroesArray.find(h => h.id === heroId);
+router.delete('/:heroId', async (req, res) => {
+    // let heroId = parseInt(req.params.heroId);//This will filter out any values with number continued by a string(including characters)
+    // let hero = heroesArray.find(h => h.id === heroId);
+
+    // let heroIndex = heroesArray.indexOf(hero);
+    // let removedHero = heroesArray.splice(heroIndex, 1);
+    // console.log(removedHero);
+    //res.send(heroesArray);
+
+    let hero = await Hero.findOneAndDelete({_id: req.params.heroId});
 
     if (!hero){
         return res.status(404).send("Hero Id does not exit");
     }
-    let heroIndex = heroesArray.indexOf(hero);
-    let removedHero = heroesArray.splice(heroIndex, 1);
-    console.log(removedHero);
-    res.send(heroesArray);
-})
+
+    res.send(hero);
+});
 
 module.exports = router;
