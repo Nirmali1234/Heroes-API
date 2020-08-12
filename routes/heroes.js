@@ -22,12 +22,12 @@ router.get('/',  async (req, res) => {
    //let heroes = await Hero.find({deceased: true, name: ""});
    //let heroes = await Hero.find({likeCount: {$nin : [3000, 10000] }}); //eq,gt,gte,lte,in,ne
    let heroes = await Hero.find()
-             .or([{likeCount: 3000}, { likeCount: 5000}])
+            // .or([{likeCount: 3000}, { likeCount: 5000}])
             //   .limit(1)
             //   .skip(1)
             //   .limit(1)
-              .sort({name: 'asc'})
-              .select({name: 1, deceased:1})
+             // .sort({name: 'asc'})
+             // .select({name: 1, deceased:1})
              // .countDocuments();
    res.send( heroes);
 });
